@@ -4,8 +4,8 @@ import "fmt"
 
 // GormAdaptor ....
 type GormAdaptor struct {
-	Hostname string
-	Port int
+	Hostname   string
+	Port       int
 	GormClient string
 }
 
@@ -13,8 +13,8 @@ type GormAdaptor struct {
 func NewGormAdaptor() *GormAdaptor {
 	// Using Constructor force having all dependencies
 	return &GormAdaptor{
-		Hostname: "localhost",
-		Port: 3000,
+		Hostname:   "localhost",
+		Port:       3000,
 		GormClient: "some client gorm instance...",
 	}
 }

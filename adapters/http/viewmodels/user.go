@@ -5,13 +5,13 @@ import (
 )
 
 // UserViewModel ...
-type UserViewModel struct{
-	Value string 
+type UserViewModel struct {
+	Value string
 }
 
 // UserToViewModel ...
 func UserToViewModel(user models.User) UserViewModel {
-	vm := UserViewModel{Value: `{"user": "`+ user.Name +`"}`} 
+	vm := UserViewModel{Value: `{"user": "` + user.Name + `"}`}
 	return vm
 }
 

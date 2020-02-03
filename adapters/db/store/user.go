@@ -1,4 +1,4 @@
-// Package store ... 
+// Package store ...
 // TODO: Move into adapters/db/gateways folder
 package store
 
@@ -15,7 +15,7 @@ type GormUserStore struct {
 }
 
 // NewGormUserStore ...
-func NewGormUserStore (db *db.GormAdaptor) *GormUserStore {
+func NewGormUserStore(db *db.GormAdaptor) *GormUserStore {
 	return &GormUserStore{
 		db: db,
 	}
@@ -25,9 +25,9 @@ func NewGormUserStore (db *db.GormAdaptor) *GormUserStore {
 func (db *GormUserStore) SelectAll() ([]models.User, error) {
 	fmt.Println("ADAPTER db.UsersSelectAll")
 
-	// Do some query 
+	// Do some query
 
-	users := []models.User{models.User{Name:"bob", Age: 123}}
-	
+	users := []models.User{{Name: "bob", Age: 123}}
+
 	return users, nil
 }
