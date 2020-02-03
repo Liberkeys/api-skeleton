@@ -1,10 +1,11 @@
 package user
 
 import (
+	"fmt"
+
 	"github.com/Liberkeys/api-skeleton/adapters/db/store"
 	"github.com/Liberkeys/api-skeleton/ports/emails"
 	"github.com/Liberkeys/api-skeleton/ports/models"
-	"fmt"
 )
 
 // QueryHandler ...
@@ -14,8 +15,16 @@ type QueryHandler interface {
 
 // DefaultQueryHandler ...
 type DefaultQueryHandler struct {
-	Store store.UserStore // Adaptor
-	Notifier emails.Notifier // Port
+	store    store.UserStore // Adaptor
+	notifier emails.Notifier // Port
+}
+
+// NewQueryHandler ...
+func NewQueryHandler(store store.UserStore, notifier emails.Notifier) *DefaultQueryHandler {
+	return &DefaultQueryHandler{
+		store:    store,
+		notifier: notifier,
+	}
 }
 
 // GetAllUsers ...
@@ -26,14 +35,14 @@ func (h *DefaultQueryHandler) GetAllUsers() ([]models.User, error) {
 	h.checkSomethingElsePrivate()
 
 	// Calling adapter
-	users, _ := h.Store.SelectAll() // TODO : check error
+	users, _ := h.store.SelectAll() // TODO : check error
 
 	// Calling port
-	h.Notifier.NotifyUser(users) // TODO : check error
+	h.notifier.NotifyUser(users) // TODO : check error
 
 	return users, nil
 }
 
-func(h *DefaultQueryHandler) checkSomethingElsePrivate() {
+func (h *DefaultQueryHandler) checkSomethingElsePrivate() {
 	fmt.Println("PORT users.checkSomethingElsePrivate")
 }

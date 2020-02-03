@@ -1,8 +1,9 @@
 package emails
 
 import (
-	"github.com/Liberkeys/api-skeleton/ports/models"
 	"fmt"
+
+	"github.com/Liberkeys/api-skeleton/ports/models"
 )
 
 // NotifyUser ...

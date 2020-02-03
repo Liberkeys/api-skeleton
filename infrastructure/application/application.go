@@ -10,16 +10,18 @@ import (
 )
 
 type Application struct {
+	// Adapters
 	dbAdaptor *db.GormAdaptor
-
 	userStore store.UserStore
+	notifier  emails.Notifier
 
-	notifier emails.Notifier
-
+	// Ports
 	userQueryHandler user.QueryHandler
 
+	// Controllers
 	userController *controllers.UserController
 
+	// Containers
 	server *http.Server
 }
 
@@ -55,10 +57,7 @@ func (app *Application) UserQueryHandler() user.QueryHandler {
 	if app.userQueryHandler != nil {
 		return app.userQueryHandler
 	}
-	app.userQueryHandler = &user.DefaultQueryHandler{ // TODO: use constructor
-		Store:    app.UserStore(),
-		Notifier: app.Notifier(),
-	}
+	app.userQueryHandler = user.NewQueryHandler(app.UserStore(), app.Notifier())
 	return app.userQueryHandler
 }
 
@@ -67,9 +66,7 @@ func (app *Application) UserController() *controllers.UserController {
 		return app.userController
 	}
 	/*  HTTP Adapter dependencies setup */
-	app.userController = &controllers.UserController{ // TODO: use constructor
-		QueryHandler: app.UserQueryHandler(),
-	}
+	app.userController = controllers.NewUserController(app.UserQueryHandler())
 	return app.userController
 }
 

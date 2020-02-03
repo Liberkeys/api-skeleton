@@ -1,6 +1,8 @@
 package user
 
-import "github.com/Liberkeys/api-skeleton/adapters/db"
+import (
+	"github.com/Liberkeys/api-skeleton/adapters/db"
+)
 
 // ICommandHandlers ...
 type ICommandHandlers interface {

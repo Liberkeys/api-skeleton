@@ -2,26 +2,33 @@ package controllers
 
 import (
 	"fmt"
-	"net/http"
-	"github.com/julienschmidt/httprouter"
 	"github.com/Liberkeys/api-skeleton/adapters/http/viewmodels"
 	"github.com/Liberkeys/api-skeleton/ports/handlers/user"
+	"github.com/julienschmidt/httprouter"
+	"net/http"
 )
 
 // UserController ...
 type UserController struct {
-	QueryHandler user.QueryHandler
+	queryHandler user.QueryHandler
+}
+
+// NewUserController ...
+func NewUserController(queryHandler user.QueryHandler) *UserController {
+	return &UserController{
+		queryHandler: queryHandler,
+	}
 }
 
 // OnUserList ...
 func (controller *UserController) OnUserList(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	fmt.Println("Request received on....") // TODO: into middleware
-	
+
 	fmt.Println("ADAPTER controllers.OnUsersGet") // TODO: into middleware
-	
+
 	// Call port
-	users, _ := controller.QueryHandler.GetAllUsers() // TODO: manage error
-	
+	users, _ := controller.queryHandler.GetAllUsers() // TODO: manage error
+
 	// View Model
 	vm := viewmodels.UserToViewModel(users[0])
 
