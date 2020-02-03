@@ -2,10 +2,12 @@ package controllers
 
 import (
 	"fmt"
+	"net/http"
+
+	"github.com/julienschmidt/httprouter"
+
 	"github.com/Liberkeys/api-skeleton/adapters/http/viewmodels"
 	"github.com/Liberkeys/api-skeleton/ports/handlers/user"
-	"github.com/julienschmidt/httprouter"
-	"net/http"
 )
 
 // UserController ...
@@ -35,7 +37,7 @@ func (controller *UserController) OnUserList(w http.ResponseWriter, r *http.Requ
 	// HTTP Response
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-type", "application/json; charset=utf-8")
-	w.Write([]byte(vm.Value)) // TODO: use VM and middlware for this
+	_, _ = w.Write([]byte(vm.Value)) // TODO: use VM and middlware for this and handle error
 
 	fmt.Println("Request terminated on....") // TODO: into middleware
 }
