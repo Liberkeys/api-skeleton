@@ -3,7 +3,6 @@ package application
 import (
 	"context"
 	"fmt"
-	"sync"
 
 	"github.com/Liberkeys/api-skeleton/adapters/db"
 	"github.com/Liberkeys/api-skeleton/adapters/email"
@@ -17,7 +16,6 @@ const (
 )
 
 type Context struct {
-	lock         sync.RWMutex
 	ctx          context.Context
 	dbAdapter    *db.Driver
 	userStore    *db.UserStore
@@ -27,8 +25,7 @@ type Context struct {
 
 func NewContext(mode ContextMode) (*Context, error) {
 	ctx := &Context{
-		lock: sync.RWMutex{},
-		ctx:  context.Background(),
+		ctx: context.Background(),
 	}
 
 	switch mode {
