@@ -6,19 +6,26 @@ import (
 
 // UserViewModel ...
 type UserViewModel struct {
-	Value string
+	Value string `json:"value"`
 }
 
-// UserToViewModel ...
-func UserToViewModel(user models.User) UserViewModel {
-	vm := UserViewModel{Value: `{"user": "` + user.Name + `"}`}
+// UsersViewModel ...
+type UsersViewModel struct {
+	Users []UserViewModel `json:"users"`
+}
+
+// ToUsersViewModel ...
+func ToUsersViewModel(users []*models.User) UsersViewModel {
+	vm := UsersViewModel{}
+	for i := range users {
+		vm.Users = append(vm.Users, ToUserViewModel(users[i]))
+	}
 	return vm
 }
 
-// UserFromViewModel ...
-func UserFromViewModel(raw string) models.User {
-	user := models.User{
-		Name: raw,
+// ToUserViewModel ...
+func ToUserViewModel(user *models.User) UserViewModel {
+	return UserViewModel{
+		Value: user.Name,
 	}
-	return user
 }

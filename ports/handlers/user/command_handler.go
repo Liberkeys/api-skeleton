@@ -1,23 +1,26 @@
 package user
 
 import (
-	"github.com/Liberkeys/api-skeleton/adapters/db"
+	"fmt"
+
+	"github.com/Liberkeys/api-skeleton/infrastructure/application"
+	"github.com/Liberkeys/api-skeleton/ports/models"
 )
 
-// ICommandHandlers ...
-type ICommandHandlers interface {
-	UpdateUser(userID int) error // Command
+func CreateOneUser(ctx *application.Context, id string) (*models.User, error) {
+	fmt.Println("PORT user.CreateOneUser")
+
+	return ctx.UserStore().InsertOne()
 }
 
-// CommandHandler ...
-type CommandHandler struct {
-	DatabaseAdaptor db.Adaptor // Adaptor
+func UpdateOneUser(ctx *application.Context, id string) (*models.User, error) {
+	fmt.Println("PORT user.UpdateOneUser")
+
+	return ctx.UserStore().UpdateOne()
 }
 
-// UpdateUser ...
-func (handler *CommandHandler) UpdateUser(userID int) error {
+func DeleteOneUser(ctx *application.Context, id string) (*models.User, error) {
+	fmt.Println("PORT user.DeleteOneUser")
 
-	// Do something
-
-	return nil
+	return ctx.UserStore().ArchiveOne()
 }

@@ -3,46 +3,38 @@ package user
 import (
 	"fmt"
 
-	"github.com/Liberkeys/api-skeleton/adapters/db/store"
-	"github.com/Liberkeys/api-skeleton/ports/emails"
+	"github.com/Liberkeys/api-skeleton/infrastructure/application"
 	"github.com/Liberkeys/api-skeleton/ports/models"
+	"github.com/Liberkeys/api-skeleton/ports/notifier"
 )
 
-// QueryHandler ...
-type QueryHandler interface {
-	GetAllUsers() ([]models.User, error) // Query
-}
-
-// DefaultQueryHandler ...
-type DefaultQueryHandler struct {
-	store    store.UserStore // Adaptor
-	notifier emails.Notifier // Port
-}
-
-// NewQueryHandler ...
-func NewQueryHandler(store store.UserStore, notifier emails.Notifier) *DefaultQueryHandler {
-	return &DefaultQueryHandler{
-		store:    store,
-		notifier: notifier,
-	}
-}
-
 // GetAllUsers ...
-func (h *DefaultQueryHandler) GetAllUsers() ([]models.User, error) {
-	fmt.Println("PORT user.GetUsers")
+func GetAllUsers(ctx *application.Context) ([]*models.User, error) {
+	fmt.Println("PORT user.GetAllUsers")
 
-	// Call some private method with depencies ready
-	h.checkSomethingElsePrivate()
+	checkSomethingElsePrivate()
 
 	// Calling adapter
-	users, _ := h.store.SelectAll() // TODO : check error
+	users, err := ctx.UserStore().SelectAll()
+	if err != nil {
+		return nil, err
+	}
 
 	// Calling port
-	h.notifier.NotifyUser(users) // TODO : check error
+	err = notifier.NotifyUser(ctx, users)
+	if err != nil {
+		return nil, err
+	}
 
 	return users, nil
 }
 
-func (h *DefaultQueryHandler) checkSomethingElsePrivate() {
+func GetOneUser(ctx *application.Context, id string) (*models.User, error) {
+	fmt.Println("PORT user.GetOneUser")
+
+	return ctx.UserStore().SelectOneByID(id)
+}
+
+func checkSomethingElsePrivate() {
 	fmt.Println("PORT users.checkSomethingElsePrivate")
 }
