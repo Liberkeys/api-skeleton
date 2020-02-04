@@ -5,14 +5,14 @@ import (
 	"log"
 
 	"github.com/Liberkeys/api-skeleton/adapters/http"
-	"github.com/Liberkeys/api-skeleton/infrastructure/application"
+	"github.com/Liberkeys/api-skeleton/infrastructure/app"
 )
 
 func main() {
 	fmt.Println("Starting API server...")
 
 	// Dependencies registration into object
-	ctx, err := application.NewContext(application.ContextModeServer)
+	ctx, err := app.NewContext(app.ContextModeServer)
 	if err != nil {
 		log.Fatal(err)
 	}

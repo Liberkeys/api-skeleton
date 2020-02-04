@@ -3,8 +3,7 @@ package db
 import (
 	"fmt"
 
-	"github.com/Liberkeys/api-skeleton/ports/models"
-)
+	"github.com/Liberkeys/api-skeleton/models")
 
 // UserStore ...
 type UserStore struct {
@@ -52,14 +51,17 @@ func (store *UserStore) SelectOneByID(id string) (*models.User, error) {
 	return user, nil
 }
 
+// InsertOne ...
 func (store *UserStore) InsertOne() (*models.User, error) {
 	return nil, nil
 }
 
+// UpdateOne ...
 func (store *UserStore) UpdateOne() (*models.User, error) {
 	return nil, nil
 }
 
+// ArchiveOne ...
 func (store *UserStore) ArchiveOne() (*models.User, error) {
 	return nil, nil
 }

@@ -4,24 +4,25 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/julienschmidt/httprouter"
+	"github.com/Liberkeys/api-skeleton/domains/users"
+	"github.com/Liberkeys/api-skeleton/infrastructure/app"
 
-	"github.com/Liberkeys/api-skeleton/adapters/http/controllers"
-	"github.com/Liberkeys/api-skeleton/infrastructure/application"
+	"github.com/julienschmidt/httprouter"
 )
 
 type Server struct {
 	router http.Handler
 }
 
-func NewServer(ctx *application.Context) *Server {
+// NewServer ...
+func NewServer(ctx *app.Context) *Server {
 	router := httprouter.New()
 
-	router.GET("/users", wrapEndpoint(ctx, controllers.OnUserList))
-	router.POST("/users", wrapEndpoint(ctx, controllers.OnUserCreate))
-	router.GET("/users/:id", wrapEndpoint(ctx, controllers.OnUserFetch))
-	router.POST("/users/:id", wrapEndpoint(ctx, controllers.OnUserUpdate))
-	router.DELETE("/users/:id", wrapEndpoint(ctx, controllers.OnUserDelete))
+	router.GET("/users", wrapEndpoint(ctx, users.HTTPList))
+	router.POST("/users", wrapEndpoint(ctx, users.HTTPCreate))
+	router.GET("/users/:id", wrapEndpoint(ctx, users.HTTPFetch))
+	router.POST("/users/:id", wrapEndpoint(ctx, users.HTTPUpdate))
+	router.DELETE("/users/:id", wrapEndpoint(ctx, users.HTTPDelete))
 
 	return &Server{
 		router: router,
@@ -35,8 +36,8 @@ func (server *Server) Start() error {
 }
 
 func wrapEndpoint(
-	ctx *application.Context,
-	endpoint func(ctx *application.Context, w http.ResponseWriter, r *http.Request, p httprouter.Params),
+	ctx *app.Context,
+	endpoint func(ctx *app.Context, w http.ResponseWriter, r *http.Request, p httprouter.Params),
 ) func(http.ResponseWriter, *http.Request, httprouter.Params) {
 
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
